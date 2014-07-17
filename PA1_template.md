@@ -101,7 +101,7 @@ summary(activity$interval)
 ```
 
 
-- Above we can see there so many are NA values in "steps" column.
+- Above we can see there are too many NA values in "steps" column.
 
 1.7 Convert date column as date.
 
@@ -127,6 +127,7 @@ activityTbl <- data.table(activity)
 ```r
 dailyTotalSteps <- activityTbl[!is.na(steps), sum(steps), by = date]
 setnames(dailyTotalSteps, names(dailyTotalSteps), c("dates", "total.steps"))
+
 hist(dailyTotalSteps$total.steps, xlab = "Daily Total Steps", main = "Histogram of Daily Total Steps(Ignoring Missing values)")
 ```
 
@@ -164,6 +165,7 @@ median(dailyTotalSteps$total.steps)
 ```r
 agvIntervalSteps <- activityTbl[!is.na(steps), mean(steps), by = interval]
 setnames(agvIntervalSteps, names(agvIntervalSteps), c("interval", "average.steps"))
+
 plot(agvIntervalSteps$interval, agvIntervalSteps$average.steps, type = "l", 
     xlab = " 5-Minute Interval", ylab = "Average Steps", main = "Average Number of Steps Taken in each 5-minute interval \n(Ignoring NA Values)")
 ```
@@ -199,7 +201,7 @@ nrow(activityTbl[is.na(steps), ])
 ```
 
 
-4.2 Here we are planning to imput value of "mean for that 5-minute interval" (calculated in step 3.1 above)
+4.2 Here our *strategy* to imput missing values for "steps" with the "mean for the corresponding 5-minute interval" (calculated in step 3.1 above)
 
 4.3 Create a new dataset that is equal to the original dataset but with the missing data filled in.
 
@@ -270,6 +272,7 @@ summary(activityImput$interval)
 ```r
 dailyTotalStepsImput <- activityImput[!is.na(steps), sum(steps), by = date]
 setnames(dailyTotalStepsImput, names(dailyTotalStepsImput), c("dates", "total.steps"))
+
 hist(dailyTotalStepsImput$total.steps, xlab = "Daily Total Steps", main = "Histogram of Daily Total Steps\n(After Imputing Missing Values)")
 ```
 
@@ -301,8 +304,8 @@ median(dailyTotalStepsImput$total.steps)
 
 ## 5. Are there differences in activity patterns between weekdays and weekends?
 
-5.1 Create a new factor variable in the dataset with two levels ??? ???weekday??? and ???weekend??? indicating whether a given date is a weekday or weekend day
-`
+5.1 Create a new factor variable in the dataset with two levels *weekday* and *weekend* indicating whether a given date is a weekday or weekend day
+
 - Identify weekday & weekends
 
 ```r

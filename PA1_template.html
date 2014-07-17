@@ -259,7 +259,7 @@ if (Sys.info()[&quot;sysname&quot;] == &quot;Windows&quot;) {
 </code></pre>
 
 <ul>
-<li>Above we can see there so many are NA values in &ldquo;steps&rdquo; column.</li>
+<li>Above we can see there are too many NA values in &ldquo;steps&rdquo; column.</li>
 </ul>
 
 <p>1.7 Convert date column as date.</p>
@@ -279,6 +279,7 @@ activityTbl &lt;- data.table(activity)
 
 <pre><code class="r">dailyTotalSteps &lt;- activityTbl[!is.na(steps), sum(steps), by = date]
 setnames(dailyTotalSteps, names(dailyTotalSteps), c(&quot;dates&quot;, &quot;total.steps&quot;))
+
 hist(dailyTotalSteps$total.steps, xlab = &quot;Daily Total Steps&quot;, main = &quot;Histogram of Daily Total Steps(Ignoring Missing values)&quot;)
 </code></pre>
 
@@ -312,6 +313,7 @@ hist(dailyTotalSteps$total.steps, xlab = &quot;Daily Total Steps&quot;, main = &
 
 <pre><code class="r">agvIntervalSteps &lt;- activityTbl[!is.na(steps), mean(steps), by = interval]
 setnames(agvIntervalSteps, names(agvIntervalSteps), c(&quot;interval&quot;, &quot;average.steps&quot;))
+
 plot(agvIntervalSteps$interval, agvIntervalSteps$average.steps, type = &quot;l&quot;, 
     xlab = &quot; 5-Minute Interval&quot;, ylab = &quot;Average Steps&quot;, main = &quot;Average Number of Steps Taken in each 5-minute interval \n(Ignoring NA Values)&quot;)
 </code></pre>
@@ -337,7 +339,7 @@ Total number of missing values:</p>
 <pre><code>## [1] 2304
 </code></pre>
 
-<p>4.2 Here we are planning to imput value of &ldquo;mean for that 5-minute interval&rdquo; (calculated in step 3.1 above)</p>
+<p>4.2 Here our <em>strategy</em> to imput missing values for &ldquo;steps&rdquo; with the &ldquo;mean for the corresponding 5-minute interval&rdquo; (calculated in step 3.1 above)</p>
 
 <p>4.3 Create a new dataset that is equal to the original dataset but with the missing data filled in.</p>
 
@@ -405,6 +407,7 @@ activityImput &lt;- data.table(activityImput)
 
 <pre><code class="r">dailyTotalStepsImput &lt;- activityImput[!is.na(steps), sum(steps), by = date]
 setnames(dailyTotalStepsImput, names(dailyTotalStepsImput), c(&quot;dates&quot;, &quot;total.steps&quot;))
+
 hist(dailyTotalStepsImput$total.steps, xlab = &quot;Daily Total Steps&quot;, main = &quot;Histogram of Daily Total Steps\n(After Imputing Missing Values)&quot;)
 </code></pre>
 
@@ -433,8 +436,7 @@ hist(dailyTotalStepsImput$total.steps, xlab = &quot;Daily Total Steps&quot;, mai
 
 <h2>5. Are there differences in activity patterns between weekdays and weekends?</h2>
 
-<p>5.1 Create a new factor variable in the dataset with two levels ??? ???weekday??? and ???weekend??? indicating whether a given date is a weekday or weekend day
-</p>
+<p>5.1 Create a new factor variable in the dataset with two levels <em>weekday</em> and <em>weekend</em> indicating whether a given date is a weekday or weekend day</p>
 
 <ul>
 <li>Identify weekday &amp; weekends</li>
